@@ -5,9 +5,10 @@ import numpy as np
 
 import torch
 from torch.utils.data import DataLoader
+from datasets.trajair_dataset import TrajAirDataset
 
 from model.trajairnet import TrajAirNet
-from model.utils import ade, fde, TrajectoryDataset, seq_collate
+from model.utils import ade, fde, seq_collate
 
 def main():
     
@@ -55,7 +56,7 @@ def main():
     datapath = os.getcwd() + args.dataset_folder + args.dataset_name + "/processed_data/"
 
     print("Loading Test Data from ",datapath + "test")
-    dataset_test = TrajectoryDataset(datapath + "test", obs_len=args.obs, pred_len=args.preds, step=args.preds_step, delim=args.delim)
+    dataset_test = TrajAirDataset(datapath + "test", obs_len=args.obs, pred_len=args.preds, step=args.preds_step, delim=args.delim)
     loader_test = DataLoader(dataset_test,batch_size=1,num_workers=4,shuffle=True,collate_fn=seq_collate)
 
     ##Load model
